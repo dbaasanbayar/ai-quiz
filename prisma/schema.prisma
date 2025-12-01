@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model users {
+  firstname String?  @db.VarChar(100)
+  lastname  String?  @db.VarChar(100)
+  gender    String?  @db.VarChar(100)
+  age       Int?
+  isactive  Boolean?
+
+  @@ignore
+}
