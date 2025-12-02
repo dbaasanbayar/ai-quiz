@@ -7,13 +7,16 @@ datasource db {
   provider = "postgresql"
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model users {
-  firstname String?  @db.VarChar(100)
-  lastname  String?  @db.VarChar(100)
-  gender    String?  @db.VarChar(100)
-  age       Int?
-  isactive  Boolean?
+model articles {
+  id      Int       @id @default(autoincrement())
+  article String?   @db.VarChar
+  content String?   @db.VarChar
+  date    DateTime? @db.Timestamp(6)
+}
 
-  @@ignore
+model saverecord {
+  id      Int       @id @default(autoincrement())
+  article String?   @db.VarChar
+  content String?   @db.VarChar
+  date    DateTime? @db.Timestamp(6)
 }

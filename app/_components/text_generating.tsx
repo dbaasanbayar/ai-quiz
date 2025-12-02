@@ -5,18 +5,6 @@ import { Button } from "@/app/_components/button";
 export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
   const [articleValue, setArticleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
-
-  const inputChangeHandler = (e: any) => {
-    const { label, value } = e.target;
-    if (label === "Article title") {
-      setArticleValue(value);
-    } else if (label === "Article Content") {
-      setContentValue(value);
-    }
-    console.log(setArticleValue(e.target));
-    console.log(setContentValue(e.target));
-  };
-
   async function clickHandler() {
     //1. save to DB
     const save = await fetch("/api/saveRecord", {
@@ -24,15 +12,15 @@ export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
       body: JSON.stringify({ articleValue, contentValue }),
     });
     const savedItem = await save.json();
-    onNewRecord(savedItem);
+    // onNewRecord(savedItem);
 
     //2. Generate summary/quiz
-    const aiRes = await fetch("/api/generateQuiz", {
-      method: "POST",
-      body: JSON.stringify({ articleValue, contentValue }),
-    });
-    const aiData = await aiRes.json();
-    onGenerated(aiData.result);
+    // const aiRes = await fetch("/api/generateQuiz", {
+    //   method: "POST",
+    //   body: JSON.stringify({ articleValue, contentValue }),
+    // });
+    // const aiData = await aiRes.json();
+    // onGenerated(aiData.result);
   }
   return (
     <div className="w-[full] h-[442px] px-[50px] justify-center flex flex-col  mt-14 bg-white gap-4">
@@ -45,20 +33,26 @@ export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
         articles will saved in the sidebar for future reference.
       </p>
       <div className="flex flex-col gap-5 text-[#71717A]">
-        <Input
-          label="Article title"
-          placeholder="Enter a title for your article..."
-          className="border rounded-md border-black w-full h-10 py-2 px-2"
-          onChange={(e: any) => setArticleValue(e.target.value)}
-          inputChangeHandler={inputChangeHandler}
-        />
-        <Input
-          label="Article Content"
-          placeholder="Paste your article content here..."
-          className="border rounded-md border-black w-full h-[120px] pb-20 px-2 py-2"
-          onChange={(e: any) => setContentValue(e.target.value)}
-          inputChangeHandler={inputChangeHandler}
-        />
+        <div className="flex flex-col">
+          <label>Article title</label>
+          <input
+            className={"border rounded-md border-black w-full h-10 py-2 px-2"}
+            value={articleValue}
+            onChange={(e: any) => setArticleValue(e.target.value)}
+            type="text"
+            placeholder={"Enter a title for your article..."}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label>Content title</label>
+          <input
+            className={"border rounded-md border-black w-full h-10 py-2 px-2"}
+            value={contentValue}
+            onChange={(e: any) => setContentValue(e.target.value)}
+            type="text"
+            placeholder={"Enter a title for your article..."}
+          />
+        </div>
       </div>
       <div className="flex justify-end">
         <Button
@@ -68,35 +62,6 @@ export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
           ready={true}
         />
       </div>
-    </div>
-  );
-};
-
-type InputProps = {
-  className: string;
-  placeholder?: string;
-  size?: string;
-  label?: string;
-  inputChangeHandler: any;
-  onChange: any;
-};
-
-export const Input = ({
-  placeholder,
-  label,
-  className,
-  inputChangeHandler,
-}: InputProps) => {
-  return (
-    <div className="flex flex-col">
-      <label>{label}</label>
-      <input
-        className={className}
-        value={inputChangeHandler}
-        onChange={inputChangeHandler}
-        type="text"
-        placeholder={placeholder}
-      />
     </div>
   );
 };
