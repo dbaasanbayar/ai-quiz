@@ -12,6 +12,7 @@ export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
       body: JSON.stringify({ articleValue, contentValue }),
     });
     const savedItem = await save.json();
+    console.log(savedItem);
     // onNewRecord(savedItem);
 
     //2. Generate summary/quiz
