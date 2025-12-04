@@ -2,26 +2,38 @@
 import { useState } from "react";
 import { IconStar } from "@/app/icons/icon_star";
 import { Button } from "@/app/_components/button";
-export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
+export const QuizGenerator = ({}: any) => {
   const [articleValue, setArticleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
+  const [generatedValue, setGeneratedValue] = useState("");
   async function clickHandler() {
-    //1. save to DB
-    const save = await fetch("/api/saveRecord", {
-      method: "POST",
-      body: JSON.stringify({ articleValue, contentValue }),
-    });
-    const savedItem = await save.json();
-    console.log(savedItem);
-    // onNewRecord(savedItem);
+    try {
+      //1. save to DB #article
+      const save = await fetch("/api/saveRecord", {
+        method: "POST",
+        body: JSON.stringify({ articleValue, contentValue }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const savedItem = await save.json();
+      console.log(savedItem);
 
-    //2. Generate summary/quiz
-    // const aiRes = await fetch("/api/generateQuiz", {
-    //   method: "POST",
-    //   body: JSON.stringify({ articleValue, contentValue }),
-    // });
-    // const aiData = await aiRes.json();
-    // onGenerated(aiData.result);
+      // 2. Generate summary
+
+      const aiRes = await fetch("/api/generateQuiz", {
+        method: "POST",
+        body: JSON.stringify({ contentValue }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (aiRes.ok) {
+        const aiData = await aiRes.json();
+        console.log("Generate Please", aiData);
+      } else {
+        console.error("Failed to summarize");
+      }
+    } catch (error) {
+      console.error("ERROR", error);
+    }
   }
   return (
     <div className="w-[full] h-[442px] px-[50px] justify-center flex flex-col  mt-14 bg-white gap-4">
@@ -47,7 +59,9 @@ export const QuizGenerator = ({ onNewRecord, onGenerated }: any) => {
         <div className="flex flex-col">
           <label>Content title</label>
           <input
-            className={"border rounded-md border-black w-full h-10 py-2 px-2"}
+            className={
+              "border flex rounded-md border-black w-full h-10 py-2 px-2"
+            }
             value={contentValue}
             onChange={(e: any) => setContentValue(e.target.value)}
             type="text"
