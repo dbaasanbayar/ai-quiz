@@ -11,7 +11,6 @@ export function Siderbar() {
       const res = await fetch("/api/history-sidebar");
       const data = await res.json();
       setHistory(data);
-      console.log("data from db", data);
     }
     loadData();
   }, []);
@@ -35,24 +34,3 @@ export function Siderbar() {
     </div>
   );
 }
-
-// export function Demo() {
-//   const [count, setCount] = useState(0);
-
-//   useEffect(() => {
-//     console.log("the count is:", count);
-
-//     return () => {
-//       console.log("i am cleaned up!");
-//     };
-//   }, [count]);
-
-//   return (
-//     <div>
-//       <h1>Count: {count}</h1>
-//       <button className="border-2" onClick={() => setCount(count + 1)}>
-//         button
-//       </button>
-//     </div>
-//   );
-// }

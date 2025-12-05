@@ -1,5 +1,5 @@
-import { Siderbar } from "@/app/_components/app_sidebar";
-import { QuizGenerator } from "@/app/_components/text_generating";
+import { Siderbar } from "@/app/_components/Sidebar";
+import { QuizGenerator } from "@/app/_components/QuizGenerator";
 
 export default function Home() {
   return (

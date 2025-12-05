@@ -1,36 +1,26 @@
 "use client";
+import chalk from "chalk";
 import { useState } from "react";
 import { IconStar } from "@/app/icons/icon_star";
-import { Button } from "@/app/_components/button";
+import { Button } from "@/app/_components/Button";
+
 export const QuizGenerator = ({}: any) => {
   const [articleValue, setArticleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
-  const [generatedValue, setGeneratedValue] = useState("");
   async function clickHandler() {
     try {
-      //1. save to DB #article
-      const save = await fetch("/api/saveRecord", {
-        method: "POST",
-        body: JSON.stringify({ articleValue, contentValue }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const savedItem = await save.json();
-      console.log(savedItem);
+      // await fetch("/api/saveRecord", {
+      //   method: "POST",
+      //   body: JSON.stringify({ articleValue, contentValue }),
+      //   headers: { "Content-Type": "application/json" },
+      // });
 
       // 2. Generate summary
-
-      const aiRes = await fetch("/api/generateQuiz", {
+      const aiRes = await fetch("/api/generate-summary", {
         method: "POST",
         body: JSON.stringify({ contentValue }),
         headers: { "Content-Type": "application/json" },
       });
-
-      if (aiRes.ok) {
-        const aiData = await aiRes.json();
-        console.log("Generate Please", aiData);
-      } else {
-        console.error("Failed to summarize");
-      }
     } catch (error) {
       console.error("ERROR", error);
     }

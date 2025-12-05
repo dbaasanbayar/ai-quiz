@@ -7,16 +7,12 @@ datasource db {
   provider = "postgresql"
 }
 
-model articles {
-  id      Int       @id @default(autoincrement())
-  article String?   @db.VarChar
-  content String?   @db.VarChar
-  date    DateTime? @db.Timestamp(6)
-}
-
 model saverecord {
-  id      Int       @id @default(autoincrement())
-  article String?   @db.VarChar
-  content String?   @db.VarChar
-  date    DateTime? @db.Timestamp(6)
+  id        Int       @id @default(autoincrement())
+  title     String?   @db.VarChar
+  content   String?   @db.VarChar
+  summary   String?   @db.VarChar
+  createdat DateTime? @db.Date
+  updatedat DateTime? @db.Date
+  quizzes   String?   @db.VarChar
 }
