@@ -1,26 +1,34 @@
 "use client";
-import chalk from "chalk";
+
 import { useState } from "react";
 import { IconStar } from "@/app/icons/icon_star";
-import { Button } from "@/app/_components/Button";
+import { Button } from "@/app/_components/button";
 
 export const QuizGenerator = ({}: any) => {
   const [articleValue, setArticleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   async function clickHandler() {
     try {
-      // await fetch("/api/saveRecord", {
-      //   method: "POST",
-      //   body: JSON.stringify({ articleValue, contentValue }),
-      //   headers: { "Content-Type": "application/json" },
-      // });
-
-      // 2. Generate summary
-      const aiRes = await fetch("/api/generate-summary", {
+     const aiResponse = await fetch("/api/generate-summary", {
         method: "POST",
         body: JSON.stringify({ contentValue }),
         headers: { "Content-Type": "application/json" },
       });
+      const aiData = await aiResponse.json();
+      await fetch("/api/save-record", {
+        method: "POST",
+        body: JSON.stringify({ 
+          articleValue,
+          contentValue, 
+          summary: aiData.summary,
+          quiz: aiData.quiz
+         }),
+        headers: { "Content-Type": "application/json" },
+      });
+      setArticleValue("");
+      setContentValue("");
+
+      alert("Success! Input cleared")
     } catch (error) {
       console.error("ERROR", error);
     }

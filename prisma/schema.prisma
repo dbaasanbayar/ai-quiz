@@ -16,3 +16,4 @@ model saverecord {
   updatedat DateTime? @db.Date
   quizzes   String?   @db.VarChar
 }
+

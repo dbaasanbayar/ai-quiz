@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
+import chalk from "chalk";
 
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({apiKey: process.env.GOOGLE_GENAI_API_KEY});
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -24,8 +25,10 @@ export async function POST(request: Request) {
       Make sure the response is valid JSON and the answer is the index (0-3) of the correct option.`,
   });
 
-  console.log("AI res:", response.text);
-  console.log("AI quiz:", quiz.text);
-  // saveDB
-  return Response.json({ summery: response.text, quiz: quiz.text });
+  console.log("AI res:", chalk.magenta(response.text)); 
+  console.log("AI quiz:", chalk.green(quiz.text));    
+  
+  return Response.json({ summary: response.text, quiz: quiz.text });
 }
+
+

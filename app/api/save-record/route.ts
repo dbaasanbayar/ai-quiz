@@ -4,13 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { articleValue, summery, quiz } = body;
-
+    const { articleValue, contentValue, summary, quiz } = body;
+console.log(body)
     // Save to Neon
     const savedRecord = await prisma.saverecord.create({
       data: {
         title: articleValue,
-        content: summery,
+        content: contentValue,
+        summary: summary,
         quizzes: quiz,
       },
     });
