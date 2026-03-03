@@ -14,14 +14,30 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
 
 type historyType = { id: number; article: string; item: string };
 
 export function Siderbar() {
   const [history, setHistory] = useState<historyType[]>([]);
  
+
+  return (
+    <SidebarProvider>
+      <Sidebar collapsible="icon" className="border-r">
+      <SidebarHeader className="border-b px-4 py-3"><h2 className="text-lg font-semibold">History</h2></SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup />
+        {history.map((item: historyType) => (
+          <p key={item.id}>{item.article}</p>
+        ))}
+        <SidebarGroup />
+      </SidebarContent>
+      <SidebarRail/>
+    </Sidebar>
+    </SidebarProvider>
+  );
+}
+
 
   // useEffect(() => {
   //   async function loadData() {
@@ -31,19 +47,3 @@ export function Siderbar() {
   //   }
   //   loadData();
   // }, []);
-
-  return (
-    <SidebarProvider>
-    <Sidebar collapsible="icon" className="border-r">
-      <SidebarHeader className="border-b px-4 py-3"><h2 className="text-lg font-semibold">History</h2></SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup />
-        {history.map((item: historyType) => (
-          <p key={item.id}>{item.article}</p>
-        ))}
-        <SidebarGroup />
-      </SidebarContent>
-    </Sidebar>
-    </SidebarProvider>
-  );
-}
