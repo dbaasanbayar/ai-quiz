@@ -8,12 +8,12 @@ export async function POST(request: Request) {
   const { contentValue } = await body;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.0-flash",
     contents: `Please provide a concise summary of the following article: ${contentValue}`,
   });
 
   const quiz = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.0-flash",
     contents: `Generate 5 multiple choice questions based on this article: ${response.text}. Return the response in this exact JSON format:
       [
         {
@@ -30,5 +30,4 @@ export async function POST(request: Request) {
   
   return Response.json({ summary: response.text, quiz: quiz.text });
 }
-
 

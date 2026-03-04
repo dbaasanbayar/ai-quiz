@@ -14,7 +14,9 @@ export const QuizGenerator = ({}: any) => {
         body: JSON.stringify({ contentValue }),
         headers: { "Content-Type": "application/json" },
       });
+         console.log("res",aiResponse)
       const aiData = await aiResponse.json();
+      console.log("aiData",aiData)
       await fetch("/api/save-record", {
         method: "POST",
         body: JSON.stringify({ 
