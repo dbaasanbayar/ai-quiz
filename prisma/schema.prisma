@@ -12,8 +12,8 @@ model saverecord {
   title     String?   @db.VarChar
   content   String?   @db.VarChar
   summary   String?   @db.VarChar
-  createdat DateTime? @db.Date
-  updatedat DateTime? @db.Date
+  createdat DateTime? @default(now())
+  updatedat DateTime? @updatedAt
   quizzes   String?   @db.VarChar
 }
 

@@ -12,10 +12,12 @@ console.log(body)
         title: articleValue,
         content: contentValue,
         summary: summary,
-        quizzes: quiz,
+        quizzes: JSON.stringify(quiz),
+        createdat: new Date(),
+        updatedat: new Date(),
       },
     });
-    console.log("Save summery to DB", savedRecord);
+    console.log("Save summery to DB", JSON.stringify(savedRecord, null, 2));
     return NextResponse.json(savedRecord);
   } catch (error) {
     console.error("Error saving record:", error);
