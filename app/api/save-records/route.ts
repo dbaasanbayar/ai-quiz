@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { articleValue, contentValue, summary, quiz } = body;
 console.log(body)
-    // Save to Neon
     const savedRecord = await prisma.saverecord.create({
       data: {
         title: articleValue,
